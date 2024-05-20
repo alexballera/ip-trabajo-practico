@@ -1,7 +1,4 @@
-# IP trabajo practico
-
-## Para entregar el TP, sólo un integrante del grupo debe completar este archivo y subirlo al  campus
-
+### Para entregar el TP, sólo un integrante del grupo debe completar este archivo y subirlo al campus
 Nombre de grupo: {Completar con el nombre del grupo}
 repositorio: {Completar con el link al repositorio}
 commit: {Completar con el commit a tener en cuenta (no se revisan cambios posteriores)}
