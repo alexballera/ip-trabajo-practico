@@ -17,11 +17,11 @@ import Data.Char
 
 -- EJ 1
 esMinuscula :: Char -> Bool
-esMinuscula c = ord c >= 97 && ord c <= 122
+esMinuscula c = ord c >= ord 'a' && ord c <= ord 'z'
 
 -- EJ 2
 letraANatural :: Char -> Int
-letraANatural c | esMinuscula c = ord c - 97
+letraANatural c | esMinuscula c = ord c - ord 'a'
                 | otherwise = -1
 
 -- EJ 3
