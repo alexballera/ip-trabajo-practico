@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 module Solucion where
 import Data.Char
 -- No se permite agregar nuevos imports
@@ -16,10 +17,7 @@ import Data.Char
 
 -- EJ 1
 esMinuscula :: Char -> Bool
-esMinuscula _ = True
-
-ord :: Char -> Int
-ord c = 3
+esMinuscula c = ord c >= 97 && ord c <= 122
 
 -- EJ 2
 letraANatural :: Char -> Int
