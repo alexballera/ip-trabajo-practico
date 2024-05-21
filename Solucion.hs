@@ -18,6 +18,9 @@ import Data.Char
 esMinuscula :: Char -> Bool
 esMinuscula _ = True
 
+ord :: Char -> Int
+ord c = 3
+
 -- EJ 2
 letraANatural :: Char -> Int
 letraANatural _ = 1
