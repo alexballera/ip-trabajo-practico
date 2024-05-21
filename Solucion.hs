@@ -21,7 +21,8 @@ esMinuscula c = ord c >= 97 && ord c <= 122
 
 -- EJ 2
 letraANatural :: Char -> Int
-letraANatural _ = 1
+letraANatural c | esMinuscula c = ord c - 97
+                | otherwise = -1
 
 -- EJ 3
 desplazar :: Char -> Int -> Char
