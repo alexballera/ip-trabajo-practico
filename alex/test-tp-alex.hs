@@ -36,7 +36,7 @@ testLetraANatural = test [
  -- Ej 3
 testDesplazar :: Test
 testDesplazar = test [
-  "testDesplazar 'a' 1" ~: desplazar 'a' 1 ~=? 'b',
+  "testDesplazar 'a' 3" ~: desplazar 'a' 3 ~=? 'd',
   "testDesplazar 'b' 2" ~: desplazar 'b' 2 ~=? 'd',
   "testDesplazar 'a' 26" ~: desplazar 'a' 26 ~=? 'a',
   "testDesplazar 'a' 27" ~: desplazar 'a' 27 ~=? 'b',
