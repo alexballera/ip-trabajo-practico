@@ -30,8 +30,9 @@ letraANatural c | esMinuscula c = ord c - ord 'a'
 -- EJ 3
 desplazar :: Char -> Int -> Char
 desplazar c n
- | esMinuscula c && n < 0 && (letraANatural c + n >= 0) = chr (ord c + n)
- | esMinuscula c && n < 0 && (letraANatural c + n < 0) = chr (ord 'a' - (letraANatural c + n))
+ | esMinuscula c && n < 0 && (div (-n) (letraANatural 'z') == 0) = chr (ord c + n)
+ -- | esMinuscula c && n < 0 && (letraANatural c + n >= 0) = chr (ord c + n)
+ -- | esMinuscula c && n < 0 && (letraANatural c + n < 0) = chr (ord 'a' - (letraANatural c + n))
  | esMinuscula c && (mod (div n (letraANatural 'z')) 2 /= 0) = chr (ord 'z' - div n (letraANatural 'z' + 1))
  | esMinuscula c && (mod (div n (letraANatural 'z')) 2 == 0) = chr (ord 'a' + div n (letraANatural 'z' + 1))
  | otherwise = c
