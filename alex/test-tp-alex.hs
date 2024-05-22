@@ -33,10 +33,31 @@ testLetraANatural = test [
   "letraANatural 'A'" ~: letraANatural 'A' ~=? -1
  ]
 
+ -- Ej 3
+testDesplazar :: Test
+testDesplazar = test [
+  "testDesplazar 'a' 1" ~: desplazar 'a' 1 ~=? 'b',
+  "testDesplazar 'b' 2" ~: desplazar 'b' 2 ~=? 'd',
+  "testDesplazar 'a' -1" ~: desplazar 'a' (-1) ~=? 'b',
+  "testDesplazar 'a' -2" ~: desplazar 'a' (-2) ~=? 'c',
+  "testDesplazar 'a' 26" ~: desplazar 'a' 26 ~=? 'y',
+  "testDesplazar 'a' 27" ~: desplazar 'a' 27 ~=? 'x',
+  "testDesplazar 'c' -1" ~: desplazar 'c' (-1) ~=? 'b',
+  "testDesplazar 'd' -2" ~: desplazar 'd' (-2) ~=? 'c',
+  "testDesplazar 'e' 5" ~: desplazar 'e' 5 ~=? 'j',
+  "testDesplazar 'f'" ~: desplazar 'f' 1 ~=? 'g',
+  "testDesplazar 'w'" ~: desplazar 'A' 1 ~=? 'A',
+  "testDesplazar 'x'" ~: desplazar 'B' 1 ~=? 'B',
+  "testDesplazar 'y'" ~: desplazar 'C' 1 ~=? 'C',
+  "testDesplazar 'z'" ~: desplazar 'D' 1 ~=? 'D',
+  "testDesplazar 'A'" ~: desplazar 'E' 1 ~=? 'E'
+ ]
+
 allTests :: Test
 allTests = test [
     "esMinuscula" ~: testEsMinuscula,
-    "testLetraANatural" ~: testLetraANatural
+    "testLetraANatural" ~: testLetraANatural,
+    "testDesplazar" ~: testDesplazar
  ]
 
 runAllTests :: IO Counts

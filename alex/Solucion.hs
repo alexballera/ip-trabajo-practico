@@ -26,7 +26,9 @@ letraANatural c | esMinuscula c = ord c - ord 'a'
 
 -- EJ 3
 desplazar :: Char -> Int -> Char
-desplazar _ _ = 'd'
+desplazar c n | esMinuscula c && n > letraANatural 'z' = chr (ord 'z' - (n - letraANatural 'z'))
+              | esMinuscula c = chr (ord c + n)
+              | otherwise = c
 
 -- EJ 4
 cifrar :: String -> Int -> String
