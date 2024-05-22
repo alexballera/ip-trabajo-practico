@@ -65,6 +65,15 @@ testCifrar = test [
   cifrar "argentina" (-19) ~?= "hynluapuh"
  ]
 
+ -- Ej 4
+testDescifrar :: Test
+testDescifrar = test [
+  descifrar "frpsxwdflrq" 3 ~?= "computacion",
+  descifrar "lxvydcjlrxw" 9 ~?= "computacion",
+  descifrar "tkzxgmbgt" 19 ~?= "argentina",
+  descifrar "hynluapuh" (-19) ~?= "argentina"
+ ]
+
 allTests :: Test
 allTests = test [
     "esMinuscula" ~: testEsMinuscula,
