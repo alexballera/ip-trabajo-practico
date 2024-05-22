@@ -26,16 +26,16 @@ letraANatural c = ord c - ord 'a'
 desplazar :: Char -> Int -> Char
 desplazar c 0 = c
 desplazar c n |not (esMinuscula c) = c
-              |(letraANatural c) + n >=0 && (letraANatural c) + n <= 25 = chr (ord c + n)
-              |n > 0 = chr (96 + (mod (n - 25 + letraANatural c) 26))
-              |otherwise = chr ((ord 'a')+ mod (26 + n + letraANatural c) 26)
+              |letraANatural c + n >=0 && letraANatural c + n <= 25 = chr (ord c + n)
+              |n > 0 = chr (96 + mod (n - 25 + letraANatural c) 26)
+              |otherwise = chr (ord 'a'+ mod (26 + n + letraANatural c) 26)
 
 --testeado con numeros grandes. Preparar mas casos especiales para testear 
 --EJ 4
 cifrar :: String -> Int -> String
 cifrar [] _ = []
 cifrar (s:ss) n |not (esMinuscula s) = s : cifrar ss n
-                |otherwise = (desplazar s n):cifrar ss n
+                |otherwise = desplazar s n:cifrar ss n
 --OK. IDENTICO a lo programado por ALEJO. 
 
 -- EJ 5

@@ -31,36 +31,30 @@ letraANatural c | esMinuscula c = ord c - ord 'a'
 
 -- EJ 3
 desplazar :: Char -> Int -> Char
-desplazar c n
- | esMinuscula c && (n == 0) = chr (ord c)
- | esMinuscula c && nEntreAyZ n = chr (ord c + n)
- | esMinuscula c && nMayor51 n = nMayor56 c n
- | esMinuscula c && nMayorZ n = chr (ord 'a' + n - (letraANatural 'z' + 1))
- | esMinuscula c && nNegativoEntreAyZ n = chr (ord 'a' - (n + letraANatural c))
- | esMinuscula c && nNegativoMenorZ n = nNegativoMenor56 c n
- | otherwise = c
- where
- nEntreAyZ n = (n > letraANatural 'a') && (n <= letraANatural 'z')
- nMayorZ n = n > letraANatural 'z'
- nMayor51 n = n > letraANatural 'z' + 26
- nMayor56 c n | n < 26 = chr (ord c + n)
-  | otherwise = nMayor56 c (n - 26)
- nNegativoEntreAyZ n = (n < letraANatural 'a') && (n >= - (letraANatural 'z'))
- nNegativoMenorZ n = n <= (-letraANatural 'z')
- nNegativoMenor56 c n | (n + letraANatural c) > (-26) = chr (ord 'a' - (n - letraANatural c))
-  | otherwise = nNegativoMenor56 c (n + 26)
+desplazar c 0 = c
+desplazar c n |not (esMinuscula c) = c
+              |letraANatural c + n >=0 && letraANatural c + n <= 25 = chr (ord c + n)
+              |n > 0 = chr (96 + mod (n - 25 + letraANatural c) 26)
+              |otherwise = chr (ord 'a'+ mod (26 + n + letraANatural c) 26)
 
--- EJ 4
+--EJ 4
 cifrar :: String -> Int -> String
-cifrar _ _ = "frpsxwdflrq"
+cifrar [] _ = []
+cifrar (s:ss) n |not (esMinuscula s) = s : cifrar ss n
+                |otherwise = desplazar s n:cifrar ss n
 
 -- EJ 5
 descifrar :: String -> Int -> String
-descifrar _ _ = "computacion"
+descifrar [] _ = []
+descifrar s n = cifrar s (-n)
 
 -- EJ 6
 cifrarLista :: [String] -> [String]
-cifrarLista _ = ["compu", "mbcp", "kpvtq"]
+cifrarLista [] = []
+cifrarLista (palabra:ls) = cifrarListaAux (palabra:ls) (length (palabra:ls))
+  where
+  cifrarListaAux [] _ = []
+  cifrarListaAux (palabra:ls) n = cifrar palabra (n-(length ls + 1)): cifrarListaAux ls n
 
 -- EJ 7
 frecuencia :: String -> [Float]

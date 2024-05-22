@@ -74,12 +74,19 @@ testDescifrar = test [
   descifrar "hynluapuh" (-19) ~?= "argentina"
  ]
 
+testsCifrarLista :: Test
+testsCifrarLista = test [
+  cifrarLista ["compu", "labo", "intro"] ~?= ["compu", "mbcp", "kpvtq"],
+  cifrarLista ["computadora", "labos", "introd"] ~?= ["computadora","mbcpt","kpvtqf"]
+ ]
+
 allTests :: Test
 allTests = test [
     "esMinuscula" ~: testEsMinuscula,
     "letraANatural" ~: testLetraANatural,
     "desplazar" ~: testDesplazar,
-    "cifrar" ~: testCifrar
+    "cifrar" ~: testCifrar,
+    "cifrarLista" ~: testsCifrarLista
  ]
 
 runAllTests :: IO Counts
