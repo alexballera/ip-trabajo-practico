@@ -1,4 +1,4 @@
-module TP where
+module SolucionAlejo where
     import Data.Char
 
     --Ejercicio 1

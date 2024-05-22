@@ -2,7 +2,9 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use even" #-}
 {-# HLINT ignore "Use odd" #-}
-module Solucion where
+
+module SolucionAlex where
+
 import Data.Char
 -- No se permite agregar nuevos imports
 -- Sólo está permitido usar estas funciones:
@@ -25,7 +27,7 @@ esMinuscula c = ord c >= ord 'a' && ord c <= ord 'z'
 -- EJ 2
 letraANatural :: Char -> Int
 letraANatural c | esMinuscula c = ord c - ord 'a'
-                | otherwise = -1
+                | otherwise = ord c
 
 -- EJ 3
 desplazar :: Char -> Int -> Char
@@ -34,8 +36,8 @@ desplazar c n
  | esMinuscula c && nEntreAyZ n = chr (ord c + n)
  | esMinuscula c && nMayor51 n = nMayor56 c n
  | esMinuscula c && nMayorZ n = chr (ord 'a' + n - (letraANatural 'z' + 1))
+ | esMinuscula c && nNegativoEntreAyZ n = chr (ord 'a' - (n + letraANatural c))
  | esMinuscula c && nNegativoMenorZ n = nNegativoMenor56 c n
- | esMinuscula c && nNegativoEntreAyZ n = chr (ord 'a' - n)
  | otherwise = c
  where
  nEntreAyZ n = (n > letraANatural 'a') && (n <= letraANatural 'z')
@@ -45,7 +47,7 @@ desplazar c n
   | otherwise = nMayor56 c (n - 26)
  nNegativoEntreAyZ n = (n < letraANatural 'a') && (n >= - (letraANatural 'z'))
  nNegativoMenorZ n = n <= (-letraANatural 'z')
- nNegativoMenor56 c n | n > (-26) = chr (ord 'a' - n)
+ nNegativoMenor56 c n | (n + letraANatural c) > (-26) = chr (ord 'a' - (n - letraANatural c))
   | otherwise = nNegativoMenor56 c (n + 26)
 
 -- EJ 4
