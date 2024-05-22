@@ -30,12 +30,23 @@ letraANatural c | esMinuscula c = ord c - ord 'a'
 -- EJ 3
 desplazar :: Char -> Int -> Char
 desplazar c n
- | esMinuscula c && n < 0 && (div (-n) (letraANatural 'z') == 0) = chr (ord c + n)
- -- | esMinuscula c && n < 0 && (letraANatural c + n >= 0) = chr (ord c + n)
- -- | esMinuscula c && n < 0 && (letraANatural c + n < 0) = chr (ord 'a' - (letraANatural c + n))
- | esMinuscula c && (mod (div n (letraANatural 'z')) 2 /= 0) = chr (ord 'z' - div n (letraANatural 'z' + 1))
- | esMinuscula c && (mod (div n (letraANatural 'z')) 2 == 0) = chr (ord 'a' + div n (letraANatural 'z' + 1))
+ | esMinuscula c && (n == 0) = chr (ord c)
+ | esMinuscula c && nEntreAyZ n = chr (ord c + n)
+ | esMinuscula c && nMayor51 n = nMayor56 c n
+ | esMinuscula c && nMayorZ n = chr (ord 'a' + n - (letraANatural 'z' + 1))
+ | esMinuscula c && nNegativoMenorZ n = nNegativoMenor56 c n
+ | esMinuscula c && nNegativoEntreAyZ n = chr (ord 'a' - n)
  | otherwise = c
+ where
+ nEntreAyZ n = (n > letraANatural 'a') && (n <= letraANatural 'z')
+ nMayorZ n = n > letraANatural 'z'
+ nMayor51 n = n > letraANatural 'z' + 26
+ nMayor56 c n | n < 26 = chr (ord c + n)
+  | otherwise = nMayor56 c (n - 26)
+ nNegativoEntreAyZ n = (n < letraANatural 'a') && (n >= - (letraANatural 'z'))
+ nNegativoMenorZ n = n <= (-letraANatural 'z')
+ nNegativoMenor56 c n | n > (-26) = chr (ord 'a' - n)
+  | otherwise = nNegativoMenor56 c (n + 26)
 
 -- EJ 4
 cifrar :: String -> Int -> String
