@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
-{-# HLINT ignore "Redundant bracket" #-}
 module SolucionCaro where
 import Data.Char
 -- No se permite agrear nuevos imports
