@@ -65,7 +65,7 @@ testCifrar = test [
   cifrar "argentina" (-19) ~?= "hynluapuh"
  ]
 
- -- Ej 4
+ -- Ej 5
 testDescifrar :: Test
 testDescifrar = test [
   descifrar "frpsxwdflrq" 3 ~?= "computacion",
@@ -74,8 +74,9 @@ testDescifrar = test [
   descifrar "hynluapuh" (-19) ~?= "argentina"
  ]
 
-testsCifrarLista :: Test
-testsCifrarLista = test [
+ -- Ej 6
+testCifrarLista :: Test
+testCifrarLista = test [
   cifrarLista ["compu", "labo", "intro"] ~?= ["compu", "mbcp", "kpvtq"],
   cifrarLista ["computadora", "labos", "introd"] ~?= ["computadora","mbcpt","kpvtqf"]
  ]
@@ -86,7 +87,7 @@ allTests = test [
     "letraANatural" ~: testLetraANatural,
     "desplazar" ~: testDesplazar,
     "cifrar" ~: testCifrar,
-    "cifrarLista" ~: testsCifrarLista
+    "cifrarLista" ~: testCifrarLista
  ]
 
 runAllTests :: IO Counts
