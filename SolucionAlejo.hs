@@ -88,8 +88,8 @@ module SolucionAlejo where
     --Ejercicio 11
     expandirClave :: String -> Int -> String
     expandirClave _ 0 = ""
-    expandirClave (x:xs) n | lenght (x:xs) > n = x : (expandirClave xs (n - 1))
-                           | otherwise = (x:xs) ++ (expandirClave (x:xs) (n - (lenght (x:xs)))) 
+    expandirClave (x:xs) n | length (x:xs) > n = x : (expandirClave xs (n - 1))
+                           | otherwise = (x:xs) ++ (expandirClave (x:xs) (n - (length (x:xs)))) 
 
 
     --Ejercicio 12
