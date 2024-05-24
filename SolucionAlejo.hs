@@ -8,8 +8,8 @@ module SolucionAlejo where
     esMinuscula c = ord c >= ord 'a' && ord c <= ord 'z'
     --Ejercicio 2
     letraANatural :: Char -> Int
-    letraANatural c | esMinuscula c = ord c - ord 'a'
-                    | otherwise = -1
+    letraANatural c = ord c - ord 'a'
+                    
 
     --Ejercicio 3
     desplazar :: Char -> Int -> Char
@@ -49,13 +49,9 @@ module SolucionAlejo where
     apareceVeces c (x:xs) | c == x = (apareceVeces c xs) + 1
                           | otherwise = apareceVeces c xs
 
-    len :: String -> Float
-    len [] = 0
-    len (x:xs) = (len xs) + 1
-
     calcularPorcentaje :: Char -> String -> Float
     calcularPorcentaje c s | not (esMinuscula c) = 0
-                           |otherwise = ((apareceVeces c s)/len (s))*100
+                           |otherwise = ((apareceVeces c s)/fromIntegral(length (s)))*100
 
      --Ejercicio 8
     cifradoMasFrecuente :: String -> Int -> (Char, Float)
