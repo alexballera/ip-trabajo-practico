@@ -101,3 +101,26 @@ module SolucionAlejo where
     descifrarVigenere :: String -> String -> String
     desscifrarVigenere [] _ = ""
     descifrarVigenere (s:ss) (c:cs) = (desplazar s (-(letraANatural c))) : (descifrarVigenere ss (tail (expandirClave (c:cs) (length (s:ss))))) 
+
+
+    --Ejercicio 14
+
+    peorCifrado :: String -> [String] -> String
+    peorCifrado _ [x] = x
+    peorCifrado s (x:y:xs) | distancia s (cifrarVigenere s x) > distancia s (cifrarVigenere s y) = peorCifrado s (y:xs)
+                           | otherwise = peorCifrado s (x:xs) 
+
+    distancia :: String -> String -> Int
+    distancia [] _ = 0
+    distancia (s:ss) (x:xs) = (abs((letraANatural s) - (letraANatural x))) + (distancia ss xs) 
+
+
+    --Ejercicio 15
+    combinacionesVigenereAux :: String -> [String] -> String -> [(String, String)]
+    combinacionesVigenereAux _ [] _ = []
+    combinacionesVigenereAux x (y:ys) cifrado | cifrarVigenere x y == cifrado = (x, y) : (combinacionesVigenereAux x ys cifrado)
+                                              | otherwise = combinacionesVigenereAux x ys cifrado
+
+    combinacionesVigenere :: [String] -> [String] -> String -> [(String, String)]
+    combinacionesVigenere [] _ _ = []
+    combinacionesVigenere (x:xs) y cifrado = (combinacionesVigenereAux x y cifrado) ++ (combinacionesVigenere xs y cifrado)
