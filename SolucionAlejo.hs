@@ -15,9 +15,9 @@ module SolucionAlejo where
     desplazar :: Char -> Int -> Char
     desplazar c 0 = c
     desplazar c n |not (esMinuscula c) = c
-              |(letraANatural c) + n >=0 && (letraANatural c) + n <= 25 = chr(ord c + n)
-			  |n > 0 = chr(96 + (mod (n - 25 + letraANatural c) 26))
-			  |otherwise = chr((ord 'a')+ mod (26 + n + letraANatural c) 26)
+                  |(letraANatural c) + n >=0 && (letraANatural c) + n <= 25 = chr(ord c + n)
+			      |n > 0 = chr(96 + (mod (n - 25 + letraANatural c) 26))
+			      |otherwise = chr((ord 'a')+ mod (26 + n + letraANatural c) 26)
 
     --Ejercicio 4
     cifrar :: String -> Int -> String
@@ -97,21 +97,14 @@ module SolucionAlejo where
     todosLosDescifrados ls = (todosLosDescifradosAux (head ls) (tail ls)) ++ todosLosDescifrados (tail ls)
 
 
-    agregarAClave :: String -> Int -> String
-    agregarAClave _ 0 = []
-    agregarAClave s n = (head s ): agregarAClave  (tail s) (n-1) 
-
-    repetirClave :: String -> Int -> String
-    repetirClave _ 0 = []
-    repetirClave s n = s ++ repetirClave s (n-1)
-
-
-
     --Ejercicio 11
+    
     expandirClave :: String -> Int -> String
     expandirClave _ 0 = ""
     expandirClave (x:xs) n | length (x:xs) > n = x : (expandirClave xs (n - 1))
-                           | otherwise = (x:xs) ++ (expandirClave (x:xs) (n - (length (x:xs)))) 
+                           | otherwise = (x:xs) ++ (expandirClave (x:xs) (n - (length (x:xs))))
+  
+
 
 
     --Ejercicio 12
@@ -121,9 +114,8 @@ module SolucionAlejo where
 
     --Ejercicio 13
     descifrarVigenere :: String -> String -> String
-    desscifrarVigenere [] [] = ""
-    descifrarVigenere (s:ss) (c:cs) = (desplazar s (-(letraANatural c))) : (descifrarVigenere ss (tail (expandirClave (c:cs) (length (s:ss))))) 
-
+    descifrarVigenere [] [] = []
+    descifrarVigenere (x:xs) (c:cs) = (desplazar x (-(letraANatural c))):(descifrarVigenere xs (tail (expandirClave (c:cs) (length (x:xs)))))
 
     --Ejercicio 14
 
