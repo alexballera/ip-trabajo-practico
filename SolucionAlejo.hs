@@ -8,8 +8,8 @@ module SolucionAlejo where
     esMinuscula c = ord c >= ord 'a' && ord c <= ord 'z'
     --Ejercicio 2
     letraANatural :: Char -> Int
-    letraANatural c | esMinuscula c = ord c - ord 'a'
-                    | otherwise = -1
+    letraANatural c = ord c - ord 'a'
+                    
 
     --Ejercicio 3
     desplazar :: Char -> Int -> Char
@@ -49,13 +49,15 @@ module SolucionAlejo where
     apareceVeces c (x:xs) | c == x = (apareceVeces c xs) + 1
                           | otherwise = apareceVeces c xs
 
-    len :: String -> Float
-    len [] = 0
-    len (x:xs) = (len xs) + 1
-
     calcularPorcentaje :: Char -> String -> Float
     calcularPorcentaje c s | not (esMinuscula c) = 0
-                           |otherwise = ((apareceVeces c s)/len (s))*100
+                           |otherwise = ((apareceVeces c s)/fromIntegral(cantidadMinusculas (s)))*100
+
+    cantidadMinusculas :: String -> Int
+    cantidadMinusculas [] = 0
+    cantidadMinusculas (c:ls) |esMinuscula c = 1 + cantidadMinusculas ls
+                              |otherwise = cantidadMinusculas ls
+
 
      --Ejercicio 8
     cifradoMasFrecuente :: String -> Int -> (Char, Float)
@@ -82,6 +84,25 @@ module SolucionAlejo where
     esDescifradoAux _ _ 27 = False
     esDescifradoAux s1 s2 n | s2 == cifrar s1 n = True
                             | otherwise = esDescifradoAux s1 s2 (n + 1)
+
+    -- EJ 10
+    todosLosDescifradosAux :: String -> [String] -> [(String,String)]
+    todosLosDescifradosAux _ [] = []
+    todosLosDescifradosAux s ls |(esDescifrado s (head ls)) && (s /= head ls) = (s,head ls): (head ls,s): todosLosDescifradosAux s (tail ls)
+                            |otherwise = todosLosDescifradosAux s (tail ls)
+
+    todosLosDescifrados :: [String] -> [(String, String)]
+    todosLosDescifrados [] = []
+    todosLosDescifrados ls = (todosLosDescifradosAux (head ls) (tail ls)) ++ todosLosDescifrados (tail ls)
+
+
+    agregarAClave :: String -> Int -> String
+    agregarAClave _ 0 = []
+    agregarAClave s n = (head s ): agregarAClave  (tail s) (n-1) 
+
+    repetirClave :: String -> Int -> String
+    repetirClave _ 0 = []
+    repetirClave s n = s ++ repetirClave s (n-1)
 
 
 
