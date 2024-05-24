@@ -1,4 +1,4 @@
-module Solucion where
+module SolucionCaro where
 import Data.Char
 -- No se permite agrear nuevos imports
 -- Sólo está permitido usar estas funciones:

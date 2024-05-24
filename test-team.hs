@@ -1,12 +1,11 @@
 import Test.HUnit
-import SolucionCaro
--- import SolucionAlex
--- import SolucionAlejo
+import SolucionAlejo
+-- import SolucionCaro
 import Data.List
 
 -- Ej 1
-testEsMinuscula :: Test
-testEsMinuscula = test [
+testsEjesMinuscula :: Test
+testsEjesMinuscula = test [
   "esMinuscula 'a'" ~: esMinuscula 'a' ~=? True,
   "esMinuscula 'b'" ~: esMinuscula 'a' ~=? True,
   "esMinuscula 'c'" ~: esMinuscula 'a' ~=? True,
@@ -20,8 +19,8 @@ testEsMinuscula = test [
  ]
 
 -- Ej 2
-testLetraANatural :: Test
-testLetraANatural = test [
+testsEjletraANatural :: Test
+testsEjletraANatural = test [
   "letraANatural 'a'" ~: letraANatural 'a' ~=? 0,
   "letraANatural 'b'" ~: letraANatural 'b' ~=? 1,
   "letraANatural 'c'" ~: letraANatural 'c' ~=? 2,
@@ -35,30 +34,30 @@ testLetraANatural = test [
  ]
 
  -- Ej 3
-testDesplazar :: Test
-testDesplazar = test [
-  "testDesplazar 'a' 3" ~: desplazar 'a' 3 ~=? 'd',
-  "testDesplazar 'b' 2" ~: desplazar 'b' 2 ~=? 'd',
-  "testDesplazar 'a' 26" ~: desplazar 'a' 26 ~=? 'a',
-  "testDesplazar 'a' 27" ~: desplazar 'a' 27 ~=? 'b',
-  "testDesplazar 'a' -1" ~: desplazar 'a' (-1) ~=? 'z',
-  "testDesplazar 'a' -2" ~: desplazar 'a' (-2) ~=? 'y',
-  "testDesplazar 'c' -1" ~: desplazar 'c' (-1) ~=? 'b',
-  "testDesplazar 'd' -2" ~: desplazar 'd' (-2) ~=? 'b',
-  "testDesplazar 'a' 1000" ~: desplazar 'a' 1000 ~=? 'm',
-  "testDesplazar 'a' -1000" ~: desplazar 'a' (-1000) ~=? 'o',
-  "testDesplazar 'e' 5" ~: desplazar 'e' 5 ~=? 'j',
-  "testDesplazar 'f'" ~: desplazar 'f' 1 ~=? 'g',
-  "testDesplazar 'w'" ~: desplazar 'A' 1 ~=? 'A',
-  "testDesplazar 'x'" ~: desplazar 'B' 1 ~=? 'B',
-  "testDesplazar 'y'" ~: desplazar 'C' 1 ~=? 'C',
-  "testDesplazar 'z'" ~: desplazar 'D' 1 ~=? 'D',
-  "testDesplazar 'A'" ~: desplazar 'E' 1 ~=? 'E'
+testsEjdesplazar :: Test
+testsEjdesplazar = test [
+  "desplazar 'a' 3" ~: desplazar 'a' 3 ~=? 'd',
+  "desplazar 'b' 2" ~: desplazar 'b' 2 ~=? 'd',
+  "desplazar 'a' 26" ~: desplazar 'a' 26 ~=? 'a',
+  "desplazar 'a' 27" ~: desplazar 'a' 27 ~=? 'b',
+  "desplazar 'a' -1" ~: desplazar 'a' (-1) ~=? 'z',
+  "desplazar 'a' -2" ~: desplazar 'a' (-2) ~=? 'y',
+  "desplazar 'c' -1" ~: desplazar 'c' (-1) ~=? 'b',
+  "desplazar 'd' -2" ~: desplazar 'd' (-2) ~=? 'b',
+  "desplazar 'a' 1000" ~: desplazar 'a' 1000 ~=? 'm',
+  "desplazar 'a' -1000" ~: desplazar 'a' (-1000) ~=? 'o',
+  "desplazar 'e' 5" ~: desplazar 'e' 5 ~=? 'j',
+  "desplazar 'f'" ~: desplazar 'f' 1 ~=? 'g',
+  "desplazar 'w'" ~: desplazar 'A' 1 ~=? 'A',
+  "desplazar 'x'" ~: desplazar 'B' 1 ~=? 'B',
+  "desplazar 'y'" ~: desplazar 'C' 1 ~=? 'C',
+  "desplazar 'z'" ~: desplazar 'D' 1 ~=? 'D',
+  "desplazar 'A'" ~: desplazar 'E' 1 ~=? 'E'
  ]
 
  -- Ej 4
-testCifrar :: Test
-testCifrar = test [
+testsEjcifrar :: Test
+testsEjcifrar = test [
   cifrar "computacion" 3 ~?= "frpsxwdflrq",
   cifrar "computacion" 9 ~?= "lxvydcjlrxw",
   cifrar "argentina" 19 ~?= "tkzxgmbgt",
@@ -66,8 +65,8 @@ testCifrar = test [
  ]
 
  -- Ej 5
-testDescifrar :: Test
-testDescifrar = test [
+testsEjdescifrar :: Test
+testsEjdescifrar = test [
   descifrar "frpsxwdflrq" 3 ~?= "computacion",
   descifrar "lxvydcjlrxw" 9 ~?= "computacion",
   descifrar "tkzxgmbgt" 19 ~?= "argentina",
@@ -75,20 +74,129 @@ testDescifrar = test [
  ]
 
  -- Ej 6
-testCifrarLista :: Test
-testCifrarLista = test [
+testsEjcifrarLista :: Test
+testsEjcifrarLista = test [
   cifrarLista ["compu", "labo", "intro"] ~?= ["compu", "mbcp", "kpvtq"],
   cifrarLista ["computadora", "labos", "introd"] ~?= ["computadora","mbcpt","kpvtqf"]
  ]
 
+ -- Ej 7
+{- testsEjfrecuencia :: Test
+testsEjfrecuencia = test [
+    expectlistProximity (frecuencia "taller") [16.666668,0.0,0.0,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0,33.333336,0.0,0.0,0.0,0.0,0.0,16.666668,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0]
+    ]
+ -}
+ -- Ej 8
+testsEjcifradoMasFrecuente :: Test
+testsEjcifradoMasFrecuente = test [
+    cifradoMasFrecuente "taller" 3 ~?= ('o', 33.333336)
+ ]
+
+ -- Ej 9
+testsEjesDescifrado :: Test
+testsEjesDescifrado = test [
+  esDescifrado "taller" "compu" ~?= False
+ ]
+
+ -- Ej 10
+testsEjtodosLosDescifrados :: Test
+testsEjtodosLosDescifrados = test [
+  todosLosDescifrados ["compu", "frpsx", "mywza"] ~?= [("compu", "frpsx"), ("frpsx", "compu")]
+ ]
+
+ -- Ej 11
+testsEjexpandirClave :: Test
+testsEjexpandirClave = test [
+  expandirClave "compu" 8 ~?= "compucom"
+ ]
+
+ -- Ej 12
+{- testsEjcifrarVigenere :: Test
+testsEjcifrarVigenere = test [
+    cifrarVigenere "computacion" "ip" ~?= "kdueciirqdv"
+    ] -}
+
+ -- Ej 13
+{- testsEjdescifrarVigenere :: Test
+testsEjdescifrarVigenere = test [
+    descifrarVigenere "kdueciirqdv" "ip" ~?= "computacion"
+    ] -}
+
+ -- Ej 14
+{- testsEjpeorCifrado :: Test
+testsEjpeorCifrado = test [
+    peorCifrado "computacion" ["ip", "asdef", "ksy"] ~?= "asdef"
+    ] -}
+
+ -- Ej 15
+{- testsEjcombinacionesVigenere :: Test
+testsEjcombinacionesVigenere = test [
+    combinacionesVigenere ["hola", "mundo"] ["a", "b"] "ipmb" ~?= [("hola", "b")]
+    ] -}
+
 allTests :: Test
 allTests = test [
-    "esMinuscula" ~: testEsMinuscula,
-    "letraANatural" ~: testLetraANatural,
-    "desplazar" ~: testDesplazar,
-    "cifrar" ~: testCifrar,
-    "cifrarLista" ~: testCifrarLista
+    "esMinuscula" ~: testsEjesMinuscula,
+    "letraANatural" ~: testsEjletraANatural,
+    "desplazar" ~: testsEjdesplazar,
+    "cifrar" ~: testsEjcifrar,
+    "descifrar" ~: testsEjdescifrar,
+    "cifrarLista" ~: testsEjcifrarLista
  ]
 
 runAllTests :: IO Counts
 runAllTests = runTestTT allTests
+
+
+-- Funciones útiles
+
+-- margetFloat(): Float
+-- asegura: res es igual a 0.00001
+margenFloat = 0.00001
+
+-- expectAny (actual: a, expected: [a]): Test
+-- asegura: res es un Test Verdadero si y sólo si actual pertenece a la lista expected
+expectAny :: (Foldable t, Eq a, Show a, Show (t a)) => a -> t a -> Test
+expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
+
+
+-- expectlistProximity (actual: [Float], expected: [Float]): Test
+-- asegura: res es un Test Verdadero si y sólo si:
+--                  |actual| = |expected|
+--                  para todo i entero tal que 0<=i<|actual|, |actual[i] - expected[i]| < margenFloat()
+expectlistProximity:: [Float] -> [Float] -> Test
+expectlistProximity actual expected = esParecidoLista actual expected ~? ("expected list: " ++ show expected ++ "\nbut got: " ++ show actual)
+
+esParecidoLista :: [Float] -> [Float] -> Bool
+esParecidoLista actual expected = length actual == length expected && esParecidoUnaAUno actual expected
+
+esParecidoUnaAUno :: [Float] -> [Float] -> Bool
+esParecidoUnaAUno [] [] = True
+esParecidoUnaAUno (x:xs) (y:ys) = aproximado x y && esParecidoUnaAUno xs ys
+
+aproximado :: Float -> Float -> Bool
+aproximado x y = abs (x - y) < margenFloat
+
+
+-- expectAnyTuplaAprox (actual: CharxFloat, expected: [CharxFloat]): Test
+-- asegura: res un Test Verdadero si y sólo si:
+--                  para algun i entero tal que 0<=i<|expected|,
+--                         (fst expected[i]) == (fst actual) && |(snd expected[i]) - (snd actual)| < margenFloat()
+
+expectAnyTuplaAprox :: (Char, Float) -> [(Char, Float)] -> Test
+expectAnyTuplaAprox actual expected = elemAproxTupla actual expected ~? ("expected any of: " ++ show expected ++ "\nbut got: " ++ show actual)
+
+elemAproxTupla :: (Char, Float) -> [(Char, Float)] -> Bool
+elemAproxTupla _ [] = False
+elemAproxTupla (ac,af) ((bc,bf):bs) = sonAprox || elemAproxTupla (ac,af) bs
+    where sonAprox = ac == bc && aproximado af bf
+
+-- expectPermutacion (actual: [T], expected[T]) : Test
+-- asegura: res es un Test Verdadero si y sólo si:
+--            para todo elemento e de tipo T, #Apariciones(actual, e) = #Apariciones(expected, e)
+
+expectPermutacion :: (Ord a, Show a) => [a] -> [a] -> Test
+expectPermutacion actual expected = esPermutacion actual expected ~? ("expected list: " ++ show expected ++ "\nbut got: " ++ show actual)
+
+esPermutacion :: Ord a => [a] -> [a] -> Bool
+esPermutacion a b = length a == length b && sort a == sort b
