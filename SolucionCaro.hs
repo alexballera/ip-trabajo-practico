@@ -81,7 +81,7 @@ cifradoMasFrecuente :: String -> Int -> (Char, Float)
 cifradoMasFrecuente s n = (mayorC (cifrar s n), mayorN (frecuencia (cifrar s n)))  -- par :letra de mayor frecuencia y su frecuencia (en una palabra)
 
                          --funciones auxiliares--
-						 
+
 mayorN :: [Float] -> Float   --frecuencia letra de mayor frecuencia aparición en una palabra
 mayorN [x] = x
 mayorN (x:xs) | x >= (head xs) = mayorN (x:(tail xs)) 
