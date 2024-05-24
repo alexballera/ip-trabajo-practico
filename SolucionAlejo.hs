@@ -112,8 +112,11 @@ module SolucionAlejo where
 
     distancia :: String -> String -> Int
     distancia [] _ = 0
-    distancia (s:ss) (x:xs) = (abs((letraANatural s) - (letraANatural x))) + (distancia ss xs) 
+    distancia (s:ss) (x:xs) = (absoluto((letraANatural s) - (letraANatural x))) + (distancia ss xs) 
 
+    absoluto :: Int -> Int
+    absoluto x | x < 0 = -x
+               | otherwise = x 
 
     --Ejercicio 15
     combinacionesVigenereAux :: String -> [String] -> String -> [(String, String)]
