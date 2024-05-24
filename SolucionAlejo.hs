@@ -16,8 +16,8 @@ module SolucionAlejo where
     desplazar c 0 = c
     desplazar c n |not (esMinuscula c) = c
                   |(letraANatural c) + n >=0 && (letraANatural c) + n <= 25 = chr(ord c + n)
-			      |n > 0 = chr(96 + (mod (n - 25 + letraANatural c) 26))
-			      |otherwise = chr((ord 'a')+ mod (26 + n + letraANatural c) 26)
+                  |n > 0 = chr(96 + (mod (n - 25 + letraANatural c) 26))
+                  |otherwise = chr((ord 'a')+ mod (26 + n + letraANatural c) 26)
 
     --Ejercicio 4
     cifrar :: String -> Int -> String
