@@ -1,4 +1,4 @@
-module SolucionCaro where
+module Solucion where
 import Data.Char
 -- No se permite agrear nuevos imports
 -- Sólo está permitido usar estas funciones:
@@ -7,12 +7,11 @@ import Data.Char
 
 -- Completar!
 -- Nombre de grupo: {Exactamentes}
--- Integrante1: { 27355966,Banegas Carolina Alejandra}
--- Integrante2: { DNI2,apellidoYNombre2}
--- Integrante3: { DNI3,apellidoYNombre3}
--- Integrante4: { DNI4,apellidoYNombre4}
--- Integrantes que abandonaron la materia: {En caso que haya abandonado la materia algún
-                        -- integrante, completar con los dni y apellidos, sino dejar vacío}
+-- Integrante1: { 27.355.966,Banegas Carolina Alejandra}
+-- Integrante2: { 43447394,Mazza Alejo}
+-- Integrante3: { 8983523,Ballera Alexander}
+-- Integrante4: { }
+-- Integrantes que abandonaron la materia: {39757107, Flores Ignacio Enrique}
 
 -- EJ 1
 esMinuscula :: Char -> Bool
@@ -20,155 +19,147 @@ esMinuscula c = ord c >= ord 'a' && ord c <= ord 'z'
 
 -- EJ 2
 letraANatural :: Char -> Int
-letraANatural c = ord c - (ord 'a')
+letraANatural c = ord c - ord 'a'
 
---EJ 3
+-- EJ 3
+-- uso de MOD para trabajar con restos congruencia modulo 26 para casos desplazamiento con rotación al principio o al final abecedario
 desplazar :: Char -> Int -> Char
 desplazar c 0 = c
 desplazar c n |not (esMinuscula c) = c
-              |(letraANatural c) + n >=0 && (letraANatural c) + n <= 25 = chr(ord c + n)
-			  |n > 0 = chr(96 + (mod (n - 25 + letraANatural c) 26))
-			  |otherwise = chr((ord 'a')+ mod (26 + n + letraANatural c) 26)
+              |(letraANatural c) + n >=0 && (letraANatural c) + n <= 25 = chr(ord c + n)      --caso desplazamiento sin rotación
+              |n > 0 = chr(96 + (mod (n - 25 + letraANatural c) 26))                          --caso desplazamiento con rotación y n positivo
+              |otherwise = chr((ord 'a')+ mod (26 + n + letraANatural c) 26)                  --caso desplazamiento con rotación y n negativo
 
---EJ 4
+-- EJ 4
 cifrar :: String -> Int -> String
-cifrar [] _ = []
-cifrar (s:ss) n |not (esMinuscula s) = s : cifrar ss n
-                |otherwise = (desplazar s n):cifrar ss n
-
+cifrar "" _ = ""
+cifrar (s:ss) n | not (esMinuscula s) = s : (cifrar ss n)
+                | otherwise = (desplazar s n) : (cifrar ss n)
+    
 -- EJ 5
 descifrar :: String -> Int -> String
-descifrar [] _ = []
 descifrar s n = cifrar s (-n)
 
+-- EJ 6
+cifrarLista :: [String] -> [String]  
+cifrarLista x = cifrarListaAux x 0    
+
+                      --función auxiliar--
 
 cifrarListaAux :: [String] -> Int -> [String]
 cifrarListaAux [] _ = []
-cifrarListaAux (palabra:ls) n = cifrar palabra (n-(length ls + 1)): cifrarListaAux ls n
+cifrarListaAux (s:ss) n = (cifrar s n) : (cifrarListaAux ss (n + 1))
 
+-- EJ 7
 
--- EJ 6
-cifrarLista :: [String] -> [String]
-cifrarLista [] = []
-cifrarLista (palabra:ls) = cifrarListaAux (palabra:ls) (length (palabra:ls))
+frecuencia :: String -> [Float]                                                                  
+frecuencia s = frecuenciaAux s 'a'
 
+                      --funciones auxiliares--
 
-cantidadVecesLetra :: Char -> String -> Int
-cantidadVecesLetra _ [] = 0
-cantidadVecesLetra c (x:xs) |c == x = 1 + (cantidadVecesLetra c xs)
-                            |otherwise = (cantidadVecesLetra c xs)
+frecuenciaAux :: String -> Char -> [Float]          --recorre abecedario y por cada letra, calcula porcentaje frecuencia 
+frecuenciaAux s 'z' = [calcularPorcentaje 'z' s]
+frecuenciaAux s c = (calcularPorcentaje c s) : (frecuenciaAux s (desplazar c 1))
+
+apareceVeces :: Char -> String -> Float         --cantidad veces una letra aparece en una palabra      
+apareceVeces _ [] = 0
+apareceVeces c (x:xs) | c == x = (apareceVeces c xs) + 1
+                      |otherwise = apareceVeces c xs
 
 cantidadMinusculas :: String -> Int
 cantidadMinusculas [] = 0
 cantidadMinusculas (c:ls) |esMinuscula c = 1 + cantidadMinusculas ls
                           |otherwise = cantidadMinusculas ls
-						  
-dividir :: Int -> Int -> Float
-dividir a b = fromIntegral a / fromIntegral b
 
-porcentajeFrecuencia :: Char -> String -> Int -> Float
-porcentajeFrecuencia c s n |(n == 0 ) = 0
-                           |otherwise = (dividir (cantidadVecesLetra c s) n )* 100
+calcularPorcentaje :: Char -> String -> Float                  --porcentaje aparición un letra minuscula sobre total letras minusculas de una palabra
+calcularPorcentaje c s |((cantidadMinusculas s )== 0) = 0
+                       |otherwise = ((apareceVeces c s)/fromIntegral(cantidadMinusculas (s)))*100   
 
-frecuenciaAux :: Char -> String -> [Float]
-frecuenciaAux 'z' s = [porcentajeFrecuencia 'z' s (cantidadMinusculas s)]
-frecuenciaAux c s = ( porcentajeFrecuencia c s (cantidadMinusculas s) : frecuenciaAux  (desplazar c 1) s )
-                           
--- EJ 7
-frecuencia :: String -> [Float]
-frecuencia s = frecuenciaAux 'a' s 
+-- Ej 8
 
---EJ 8
+cifradoMasFrecuente :: String -> Int -> (Char, Float) 
+cifradoMasFrecuente s n = (mayorC (cifrar s n), mayorN (frecuencia (cifrar s n)))  -- par :letra de mayor frecuencia y su frecuencia (en una palabra)
 
---cifradoMasFrecuenteAux :: [Float]-> (Char, Float)
---cifradoMasFrecuenteAux [] = ('a',0.0)
---cifradoMasFrecuenteAux (x:y:xs)|x>y = ( posicion x ,x)
---                               |otherwise = y: cifradoMasFrecuenteAux xs
---ver posicion relativa y dato maximo y caso base de requerirse
+                         --funciones auxiliares--
+						 
+mayorN :: [Float] -> Float   --frecuencia letra de mayor frecuencia aparición en una palabra
+mayorN [x] = x
+mayorN (x:xs) | x >= (head xs) = mayorN (x:(tail xs)) 
+              | otherwise = mayorN xs
 
+mayorC :: String -> Char     --letra de mayor frecuencia aparición en una palabra
+mayorC [x] = x 
+mayorC (x:xs) | mayorN (frecuencia (x:xs)) == calcularPorcentaje x (x:xs) = x
+              |otherwise = mayorC xs
 
---EJ 9
-esDescifrado:: String -> String -> Bool				 
+-- EJ 9
+esDescifrado :: String -> String -> Bool
 esDescifrado s1 s2 = esDescifradoAux s1 s2 0
 
-esDescifradoAux :: String -> String -> Int -> Bool
+                           --funcion auxiliar--      
+
+esDescifradoAux :: String -> String -> Int-> Bool
 esDescifradoAux _ _ 27 = False
-esDescifradoAux s1 s2 n | (s2 == (cifrar s1 n) )= True
-                        |otherwise = esDescifradoAux s1 s2 (n+1)
+esDescifradoAux s1 s2 n | s2 == cifrar s1 n = True
+                        | otherwise = esDescifradoAux s1 s2 (n + 1)
 
+-- EJ 10
 
-todosLosDescifradosAux :: String -> [String] -> [(String,String)]
+todosLosDescifrados :: [String] -> [(String, String)]
+todosLosDescifrados [] = []
+todosLosDescifrados ls = (todosLosDescifradosAux (head ls) (tail ls)) ++ todosLosDescifrados (tail ls) 
+
+                          --función auxiliar--
+
+todosLosDescifradosAux :: String -> [String] -> [(String,String)]        
 todosLosDescifradosAux _ [] = []
 todosLosDescifradosAux s ls |(esDescifrado s (head ls)) && (s /= head ls) = (s,head ls): (head ls,s): todosLosDescifradosAux s (tail ls)
                             |otherwise = todosLosDescifradosAux s (tail ls)
--- EJ 10
-todosLosDescifrados :: [String] -> [(String, String)]
-todosLosDescifrados [] = []
-todosLosDescifrados ls = (todosLosDescifradosAux (head ls) (tail ls)) ++ todosLosDescifrados (tail ls)
-
-
-agregarAClave :: String -> Int -> String
-agregarAClave _ 0 = []
-agregarAClave s n = (head s ): agregarAClave  (tail s) (n-1) 
-
-repetirClave :: String -> Int -> String
-repetirClave _ 0 = []
-repetirClave s n = s ++ repetirClave s (n-1)
 
 -- EJ 11
 expandirClave :: String -> Int -> String
-expandirClave s n | (n < length s ) = (agregarAClave s n )
-                  |otherwise = (repetirClave s (div n (length s)) ) ++ (  agregarAClave s (mod n (length s))  ) 
+expandirClave _ 0 = ""
+expandirClave (x:xs) n | length (x:xs) > n = x : (expandirClave xs (n - 1))                  --caso n menor a longitud clave (trunca clave)
+                       | otherwise = (x:xs) ++ (expandirClave (x:xs) (n - (length (x:xs))))  --caso n mayor a longitud clave (añade letras faltantes a clave)
+  
 
-
-cifrarVigenere :: String -> String -> String
-cifrarVigenere [] _ = []
-cifrarVigenere (x:xs) (c:cs) =(desplazar x (letraANatural c)): cifrarVigenere xs (tail (expandirClave (c:cs) (length (x:xs))))
+-- EJ 12
+cifrarVigenere :: String -> String -> String    --recorre letra x letra cifrando Vigenere (lo que requiere expandir la clave para el cifrado)
+cifrarVigenere [] _ = ""
+cifrarVigenere (s:ss) (c:cs) = (desplazar s (letraANatural c)) : (cifrarVigenere ss (tail (expandirClave (c:cs) (length (s:ss))))) 
 
 
 -- EJ 13
-descifrarVigenere :: String -> String -> String
-descifrarVigenere [] [] = []
+descifrarVigenere :: String -> String -> String   --recorre letra x letra descifrando Vigenere (lo que requiere expandir la clave para el descifrado)
+descifrarVigenere [] [] = []                                  
 descifrarVigenere (x:xs) (c:cs) = (desplazar x (-(letraANatural c))):(descifrarVigenere xs (tail (expandirClave (c:cs) (length (x:xs)))))
 
-absoluto :: Int -> Int
-absoluto x | x < 0 = - x 
-           |otherwise = x
-
-distanciaCifrado :: String -> String -> Int
-distanciaCifrado [] _ = 0
-distanciaCifrado (x:s1) (y:s2) = absoluto ((letraANatural x) - (letraANatural y)) + distanciaCifrado s1 s2
-
-listarCifradoV :: String -> [String] -> [(String,String)]
-listarCifradoV _ [] = []
-listarCifradoV s (c:cs) = ( cifrarVigenere s (expandirClave c (length s)),c) : (listarCifradoV s cs)      
- 
-listarDistanciaCifrado :: String -> [(String,String)]-> [(String,Int)]
-listarDistanciaCifrado _ [] = []                                          
-listarDistanciaCifrado s (c:cs)= (snd(c), distanciaCifrado (fst(c)) s ): (listarDistanciaCifrado s cs)
-
-menorDistanciaCifradoV :: [(String,Int)] -> [(String,Int)]
-menorDistanciaCifradoV [] = []
-menorDistanciaCifradoV (c1:c2:cs) | ( snd(c1) < snd(c2) ) = c1 : (menorDistanciaCifradoV cs)
-                                  | otherwise = c2 : (menorDistanciaCifradoV cs)
 
 -- EJ 14
-peorCifrado :: String -> [String] -> String
-peorCifrado _ [] = []
-peorCifrado s cs = fst(head (menorDistanciaCifradoV (listarDistanciaCifrado s (listarCifradoV s cs))))
-
-  
-listarPosiblesDescifrados :: [String] -> String -> [(String,String)]
-listarPosiblesDescifrados [] _ = []
-listarPosiblesDescifrados (c:cs) s = (descifrarVigenere s (expandirClave c (length s)),c): (listarPosiblesDescifrados cs s)
-
-listarMensajes :: [(String,String)] -> String-> [(String,String)]
-listarMensajes [] _ =[]
-listarMensajes (d:dc) m | ((fst (d)) == m) = (m,snd(d)) : (listarMensajes dc m)
-                        | otherwise = (listarMensajes dc m)
+peorCifrado :: String -> [String] -> String   
+peorCifrado _ [x] = x
+peorCifrado s (x:y:xs) | distancia s (cifrarVigenere s x) > distancia s (cifrarVigenere s y) = peorCifrado s (y:xs)
+                       | otherwise = peorCifrado s (x:xs) 
  
-						 							 
+                            --funciones auxiliares--
+
+distancia :: String -> String -> Int   --calcula sumatoria valores absolutos distancia por cada letra palabra cifrada y letra clave en mismo orden
+distancia [] _ = 0
+distancia (s:ss) (x:xs) = (absoluto((letraANatural s) - (letraANatural x))) + (distancia ss xs) 
+
+absoluto :: Int -> Int
+absoluto x | x < 0 = -x
+           | otherwise = x 
+
+
 -- EJ 15
-combinacionesVigenere :: [String] -> [String] -> String -> [(String,String)]
+combinacionesVigenere :: [String] -> [String] -> String -> [(String, String)]   --recorre mensaje (listado palabras) y usa función auxiliar con c/palabra
 combinacionesVigenere [] _ _ = []
-combinacionesVigenere (m:ms) cs s = (listarMensajes (listarPosiblesDescifrados cs s) m) ++ (combinacionesVigenere ms cs s)
+combinacionesVigenere (x:xs) y cifrado = (combinacionesVigenereAux x y cifrado) ++ (combinacionesVigenere xs y cifrado)
+
+                           --funcion auxiliar--
+
+combinacionesVigenereAux :: String -> [String] -> String -> [(String, String)]  --recorre listado claves, y contrasta cifradoVigenere (palabra-clave) con cifrado
+combinacionesVigenereAux _ [] _ = []
+combinacionesVigenereAux x (y:ys) cifrado | cifrarVigenere x y == cifrado = (x, y) : (combinacionesVigenereAux x ys cifrado)
+                                          | otherwise = combinacionesVigenereAux x ys cifrado
