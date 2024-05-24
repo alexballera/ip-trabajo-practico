@@ -1,11 +1,34 @@
 import Test.HUnit
 import SolucionAlejo
--- import SolucionCaro
 import Data.List
+-- No está permitido agregar nuevos imports.
 
--- Ej 1
+runCatedraTests :: IO Counts
+runCatedraTests = runTestTT allTests
+
+allTests :: Test
+allTests = test [
+    "esMinuscula" ~: testsEjesMinuscula,
+    "letraANatural" ~: testsEjletraANatural,
+    "desplazar" ~: testsEjdesplazar,
+    "cifrar" ~: testsEjcifrar,
+    "descifrar" ~: testsEjdescifrar,
+    "cifrarLista" ~: testsEjcifrarLista,
+    "frecuencia" ~: testsEjfrecuencia,
+    "cifradoMasFrecuente" ~: testsEjcifradoMasFrecuente,
+    "esDescifrado" ~: testsEjesDescifrado,
+    "todosLosDescifrados" ~: testsEjtodosLosDescifrados,
+    "expandirClave" ~: testsEjexpandirClave,
+    "cifrarVigenere" ~: testsEjcifrarVigenere,
+    "descifrarVigenere" ~: testsEjdescifrarVigenere,
+    "peorCifrado" ~: testsEjpeorCifrado,
+    "combinacionesVigenere" ~: testsEjcombinacionesVigenere
+    ]
+
+-- EJ 1
 testsEjesMinuscula :: Test
 testsEjesMinuscula = test [
+  "esMinuscula 'd'" ~: esMinuscula 'd' ~?= True,
   "esMinuscula 'a'" ~: esMinuscula 'a' ~=? True,
   "esMinuscula 'b'" ~: esMinuscula 'a' ~=? True,
   "esMinuscula 'c'" ~: esMinuscula 'a' ~=? True,
@@ -18,9 +41,10 @@ testsEjesMinuscula = test [
   "esMinuscula 'n'" ~: esMinuscula 'n' ~=? True
  ]
 
--- Ej 2
+-- EJ 2
 testsEjletraANatural :: Test
 testsEjletraANatural = test [
+  "letraANatural 'b'" ~:  letraANatural 'b' ~?= 1,
   "letraANatural 'a'" ~: letraANatural 'a' ~=? 0,
   "letraANatural 'b'" ~: letraANatural 'b' ~=? 1,
   "letraANatural 'c'" ~: letraANatural 'c' ~=? 2,
@@ -33,7 +57,7 @@ testsEjletraANatural = test [
   "letraANatural 'z'" ~: letraANatural 'z' ~=? 25
  ]
 
- -- Ej 3
+-- EJ 3
 testsEjdesplazar :: Test
 testsEjdesplazar = test [
   "desplazar 'a' 3" ~: desplazar 'a' 3 ~=? 'd',
@@ -55,7 +79,7 @@ testsEjdesplazar = test [
   "desplazar 'A'" ~: desplazar 'E' 1 ~=? 'E'
  ]
 
- -- Ej 4
+-- EJ 4
 testsEjcifrar :: Test
 testsEjcifrar = test [
   cifrar "computacion" 3 ~?= "frpsxwdflrq",
@@ -64,7 +88,7 @@ testsEjcifrar = test [
   cifrar "argentina" (-19) ~?= "hynluapuh"
  ]
 
- -- Ej 5
+-- EJ 5
 testsEjdescifrar :: Test
 testsEjdescifrar = test [
   descifrar "frpsxwdflrq" 3 ~?= "computacion",
@@ -73,80 +97,66 @@ testsEjdescifrar = test [
   descifrar "hynluapuh" (-19) ~?= "argentina"
  ]
 
- -- Ej 6
+-- EJ 6
 testsEjcifrarLista :: Test
 testsEjcifrarLista = test [
   cifrarLista ["compu", "labo", "intro"] ~?= ["compu", "mbcp", "kpvtq"],
   cifrarLista ["computadora", "labos", "introd"] ~?= ["computadora","mbcpt","kpvtqf"]
  ]
 
- -- Ej 7
-{- testsEjfrecuencia :: Test
+-- EJ 7
+testsEjfrecuencia :: Test
 testsEjfrecuencia = test [
-    expectlistProximity (frecuencia "taller") [16.666668,0.0,0.0,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0,33.333336,0.0,0.0,0.0,0.0,0.0,16.666668,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0]
-    ]
- -}
- -- Ej 8
-testsEjcifradoMasFrecuente :: Test
-testsEjcifradoMasFrecuente = test [
-    cifradoMasFrecuente "taller" 3 ~?= ('o', 33.333336)
+  expectlistProximity (frecuencia "taller") [16.666668,0.0,0.0,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0,33.333336,0.0,0.0,0.0,0.0,0.0,16.666668,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0]
  ]
 
- -- Ej 9
+-- EJ 8
+testsEjcifradoMasFrecuente :: Test
+testsEjcifradoMasFrecuente = test [
+  cifradoMasFrecuente "taller" 3 ~?= ('o', 33.333336)
+ ]
+
+-- EJ 9
 testsEjesDescifrado :: Test
 testsEjesDescifrado = test [
   esDescifrado "taller" "compu" ~?= False
  ]
 
- -- Ej 10
+-- EJ 10
 testsEjtodosLosDescifrados :: Test
 testsEjtodosLosDescifrados = test [
   todosLosDescifrados ["compu", "frpsx", "mywza"] ~?= [("compu", "frpsx"), ("frpsx", "compu")]
  ]
 
- -- Ej 11
+-- EJ 11
 testsEjexpandirClave :: Test
 testsEjexpandirClave = test [
   expandirClave "compu" 8 ~?= "compucom"
  ]
 
- -- Ej 12
-{- testsEjcifrarVigenere :: Test
+-- EJ 12
+testsEjcifrarVigenere :: Test
 testsEjcifrarVigenere = test [
-    cifrarVigenere "computacion" "ip" ~?= "kdueciirqdv"
-    ] -}
-
- -- Ej 13
-{- testsEjdescifrarVigenere :: Test
-testsEjdescifrarVigenere = test [
-    descifrarVigenere "kdueciirqdv" "ip" ~?= "computacion"
-    ] -}
-
- -- Ej 14
-{- testsEjpeorCifrado :: Test
-testsEjpeorCifrado = test [
-    peorCifrado "computacion" ["ip", "asdef", "ksy"] ~?= "asdef"
-    ] -}
-
- -- Ej 15
-{- testsEjcombinacionesVigenere :: Test
-testsEjcombinacionesVigenere = test [
-    combinacionesVigenere ["hola", "mundo"] ["a", "b"] "ipmb" ~?= [("hola", "b")]
-    ] -}
-
-allTests :: Test
-allTests = test [
-    "esMinuscula" ~: testsEjesMinuscula,
-    "letraANatural" ~: testsEjletraANatural,
-    "desplazar" ~: testsEjdesplazar,
-    "cifrar" ~: testsEjcifrar,
-    "descifrar" ~: testsEjdescifrar,
-    "cifrarLista" ~: testsEjcifrarLista
+  cifrarVigenere "computacion" "ip" ~?= "kdueciirqdv"
  ]
 
-runAllTests :: IO Counts
-runAllTests = runTestTT allTests
+-- EJ 13
+testsEjdescifrarVigenere :: Test
+testsEjdescifrarVigenere = test [
+  descifrarVigenere "kdueciirqdv" "ip" ~?= "computacion"
+ ]
 
+-- EJ 14
+testsEjpeorCifrado :: Test
+testsEjpeorCifrado = test [
+  peorCifrado "computacion" ["ip", "asdef", "ksy"] ~?= "asdef"
+ ]
+
+-- EJ 15
+testsEjcombinacionesVigenere :: Test
+testsEjcombinacionesVigenere = test [
+  combinacionesVigenere ["hola", "mundo"] ["a", "b"] "ipmb" ~?= [("hola", "b")]
+ ]
 
 -- Funciones útiles
 
@@ -168,11 +178,11 @@ expectlistProximity:: [Float] -> [Float] -> Test
 expectlistProximity actual expected = esParecidoLista actual expected ~? ("expected list: " ++ show expected ++ "\nbut got: " ++ show actual)
 
 esParecidoLista :: [Float] -> [Float] -> Bool
-esParecidoLista actual expected = length actual == length expected && esParecidoUnaAUno actual expected
+esParecidoLista actual expected = (length actual) == (length expected) && (esParecidoUnaAUno actual expected)
 
 esParecidoUnaAUno :: [Float] -> [Float] -> Bool
 esParecidoUnaAUno [] [] = True
-esParecidoUnaAUno (x:xs) (y:ys) = aproximado x y && esParecidoUnaAUno xs ys
+esParecidoUnaAUno (x:xs) (y:ys) = (aproximado x y) && (esParecidoUnaAUno xs ys)
 
 aproximado :: Float -> Float -> Bool
 aproximado x y = abs (x - y) < margenFloat
@@ -188,8 +198,10 @@ expectAnyTuplaAprox actual expected = elemAproxTupla actual expected ~? ("expect
 
 elemAproxTupla :: (Char, Float) -> [(Char, Float)] -> Bool
 elemAproxTupla _ [] = False
-elemAproxTupla (ac,af) ((bc,bf):bs) = sonAprox || elemAproxTupla (ac,af) bs
-    where sonAprox = ac == bc && aproximado af bf
+elemAproxTupla (ac,af) ((bc,bf):bs) = sonAprox || (elemAproxTupla (ac,af) bs)
+    where sonAprox = (ac == bc) && (aproximado af bf)
+
+
 
 -- expectPermutacion (actual: [T], expected[T]) : Test
 -- asegura: res es un Test Verdadero si y sólo si:
@@ -199,4 +211,4 @@ expectPermutacion :: (Ord a, Show a) => [a] -> [a] -> Test
 expectPermutacion actual expected = esPermutacion actual expected ~? ("expected list: " ++ show expected ++ "\nbut got: " ++ show actual)
 
 esPermutacion :: Ord a => [a] -> [a] -> Bool
-esPermutacion a b = length a == length b && sort a == sort b
+esPermutacion a b = (length a == length b) && (sort a == sort b)
