@@ -1,5 +1,5 @@
 import Test.HUnit
-import Solucion
+import SolucionAlejo
 import Data.List
 -- No está permitido agregar nuevos imports.
 
@@ -76,7 +76,8 @@ testsEjdesplazar = test [
   "desplazar 'x'" ~: desplazar 'B' 1 ~=? 'B',
   "desplazar 'y'" ~: desplazar 'C' 1 ~=? 'C',
   "desplazar 'z'" ~: desplazar 'D' 1 ~=? 'D',
-  "desplazar 'A'" ~: desplazar 'E' 1 ~=? 'E'
+  "desplazar 'A'" ~: desplazar 'E' 1 ~=? 'E',
+  "desplazar '%'" ~: desplazar '%' 3 ~=? '%',
  ]
 
 -- EJ 4
@@ -85,7 +86,8 @@ testsEjcifrar = test [
   cifrar "computacion" 3 ~?= "frpsxwdflrq",
   cifrar "computacion" 9 ~?= "lxvydcjlrxw",
   cifrar "argentina" 19 ~?= "tkzxgmbgt",
-  cifrar "argentina" (-19) ~?= "hynluapuh"
+  cifrar "argentina" (-19) ~?= "hynluapuh",
+  cifrar "carolina" (1001) ~?= "pnebyvan",
  ]
 
 -- EJ 5
@@ -94,7 +96,8 @@ testsEjdescifrar = test [
   descifrar "frpsxwdflrq" 3 ~?= "computacion",
   descifrar "lxvydcjlrxw" 9 ~?= "computacion",
   descifrar "tkzxgmbgt" 19 ~?= "argentina",
-  descifrar "hynluapuh" (-19) ~?= "argentina"
+  descifrar "hynluapuh" (-19) ~?= "argentina",
+  descifrar "pnebyvan" 1001 ~?= "carolina",
  ]
 
 -- EJ 6
@@ -102,60 +105,98 @@ testsEjcifrarLista :: Test
 testsEjcifrarLista = test [
   cifrarLista ["compu", "labo", "intro"] ~?= ["compu", "mbcp", "kpvtq"],
   cifrarLista ["computadora", "labos", "introd"] ~?= ["computadora","mbcpt","kpvtqf"]
+  cifrarLista [] ~?= [],
+  cifrarLista ["a"]~?= ["a"],
+  cifrarLista ["mi compu", "el gato", "mi casa"]~?= ["mi compu","fm hbup","ok ecuc"]
+  cifrarLista ["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a"] ~?= ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","a","b"]
+  cifrarLista ["ABCDEF", "A", "%&/(/&%"]~?= ["ABCDEF", "A", "%&/(/&%"]
  ]
 
 -- EJ 7
 testsEjfrecuencia :: Test
 testsEjfrecuencia = test [
-  expectlistProximity (frecuencia "taller") [16.666668,0.0,0.0,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0,33.333336,0.0,0.0,0.0,0.0,0.0,16.666668,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0]
+  expectlistProximity (frecuencia "taller") [16.666668,0.0,0.0,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0,33.333336,0.0,0.0,0.0,0.0,0.0,16.666668,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0],
+  expectlistProximity (frecuencia "TRAMPA") [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
+  expectlistProximity (frecuencia "abcdefghijklmnopqrstuvwxyz")[3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154,3.846154],
+  expectlistProximity (frecuencia "aaaaaa") [100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
  ]
 
 -- EJ 8
 testsEjcifradoMasFrecuente :: Test
 testsEjcifradoMasFrecuente = test [
-  cifradoMasFrecuente "taller" 3 ~?= ('o', 33.333336)
+  cifradoMasFrecuente "taller" 3 ~?= ('o', 33.333336),
+  cifradoMasFrecuente "amalgama" 0  ~?= ('a',50.0),
+  cifradoMasFrecuente "t" 8 ~?= ('b',100.0),
+  cifradoMasFrecuente "eXCELENTE" 3 ~?= ('h',100.0),
+  cifradoMasFrecuente "aabbccddee" 4 ~?= ('e',20.0),
  ]
 
 -- EJ 9
 testsEjesDescifrado :: Test
 testsEjesDescifrado = test [
-  esDescifrado "taller" "compu" ~?= False
+  esDescifrado "taller" "compu" ~?= False,
+  esDescifrado "compu" "compu" ~?= True,
+  esDescifrado "TTTT" "TTTT" ~?= True,
+  esDescifrado "TTTT" "AAAA" ~?= False,
+  esDescifrado "ab" "abcde" ~?= False,
  ]
 
 -- EJ 10
 testsEjtodosLosDescifrados :: Test
 testsEjtodosLosDescifrados = test [
   todosLosDescifrados ["compu", "frpsx", "mywza"] ~?= [("compu", "frpsx"), ("frpsx", "compu")]
+  todosLosDescifrados ["a","b","c","d"] ~?= [("a","b"),("b","a"),("a","c"),("c","a"),("a","d"),("d","a"),("b","c"),("c","b"),("b","d"),("d","b"),("c","d"),("d","c")]
+  todosLosDescifrados ["compu", "compu"] ~?= []
+  todosLosDescifrado [] ~?= []
  ]
 
 -- EJ 11
 testsEjexpandirClave :: Test
 testsEjexpandirClave = test [
   expandirClave "compu" 8 ~?= "compucom"
+  expandirClave "compu" 1 ~?= "c"
+  expandirClave "a" 20 ~?= "aaaaaaaaaaaaaaaaaaaa"
+  expandirClave "argentina" 50 ~?= "argentinaargentinaargentinaargentinaargentinaargen"
  ]
 
 -- EJ 12
 testsEjcifrarVigenere :: Test
 testsEjcifrarVigenere = test [
-  cifrarVigenere "computacion" "ip" ~?= "kdueciirqdv"
+  cifrarVigenere "computacion" "ip" ~?= "kdueciirqdv" 
+  cifrarVigenere "argentina campeon del mundo" "a" ~?= "argentina campeon del mundo"
+  cifrarVigenere "introduccion a la programacion" "compu" ~?= "kbfgifiorcqb p no elqudpgcqudh"
+  cifrarVigenere "TRAMPA" "tramposa" ~?= "TRAMPA"
+  cifrarVigenere "DeMoCrAcIa" "si" ~?= "DmMwCzAkIi"
+  
  ]
 
 -- EJ 13
 testsEjdescifrarVigenere :: Test
-testsEjdescifrarVigenere = test [
+testsEjdescifrarVigenere = test [c
   descifrarVigenere "kdueciirqdv" "ip" ~?= "computacion"
+  descifrarVigenere "argentina campeon del mundo" "a" ~?= "argentina campeon del mundo"
+  descifrarVigenere "kbfgifiorcqb p no elqudpgcqudh" ?= "introduccion a la programacion" "compu"
+  descifrarVigenere "TRAMPA" "tramposa" ~?= "TRAMPA"
+  descifrarVigenere "DmMwCzAkIi" "si" ~?= "DeMoCrAcIa"
  ]
 
 -- EJ 14
 testsEjpeorCifrado :: Test
 testsEjpeorCifrado = test [
   peorCifrado "computacion" ["ip", "asdef", "ksy"] ~?= "asdef"
+  peorCifrado "docente" ["a", "b", "c", "d"] ~?= "a"
+  peorCifrado "alumno" ["alegria"] ~?= "alegria"
+  peorCifrado "aBcDeFgH" ["bcd", "ab", "jklmnio"] ~?= "ab"
+  peorCifrado "a" ["adfd", "bjkj", "cjkjk", "dajkjk", "yjkjkj", "zkjkjk"] ~?= "a"
  ]
 
 -- EJ 15
 testsEjcombinacionesVigenere :: Test
 testsEjcombinacionesVigenere = test [
   combinacionesVigenere ["hola", "mundo"] ["a", "b"] "ipmb" ~?= [("hola", "b")]
+  combinacionesVigenere ["argentina","brasil","peru"] ["g", "z", "a"] "gxmktzotg" ~?= [("argentina","g")]
+  combinacionesVigenere["algoritmo", "adjurawso"]  ["asdg", "a" ] "adjurawso" ~?= [("algoritmo","asdg"),("adjurawso","a")]
+  combinacionesVigenere ["algoritmo", "pascal"] ["b", "bbb", "bbbbb", "bbbbbbbbb"] "bmhpsjunp" ~?= [("algoritmo","b"),("algoritmo","bbb"),("algoritmo","bbbbb"),("algoritmo","bbbbbbbbb")]
  ]
 
 -- Funciones útiles
