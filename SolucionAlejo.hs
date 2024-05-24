@@ -13,10 +13,11 @@ module SolucionAlejo where
 
     --Ejercicio 3
     desplazar :: Char -> Int -> Char
-    desplazar c n | not (esMinuscula c) = c 
-                  | ((ord c) + n) <= 122 &&  ((ord c) + n) >= 97 = chr ((ord c) + n)
-                  | n >= 0 =  chr (((ord c) + n) - 26)
-                  | otherwise = chr (((ord c) + n) + 26)
+    desplazar c 0 = c
+    desplazar c n |not (esMinuscula c) = c
+              |(letraANatural c) + n >=0 && (letraANatural c) + n <= 25 = chr(ord c + n)
+			  |n > 0 = chr(96 + (mod (n - 25 + letraANatural c) 26))
+			  |otherwise = chr((ord 'a')+ mod (26 + n + letraANatural c) 26)
 
     --Ejercicio 4
     cifrar :: String -> Int -> String
@@ -74,7 +75,7 @@ module SolucionAlejo where
     mayorC (x:xs) | mayorN (frecuencia (x:xs)) == calcularPorcentaje x (x:xs) = x
                   | otherwise = mayorC xs
 
-
+ 
     --Ejercicio 9
 
     esDescifrado :: String -> String -> Bool
@@ -120,7 +121,7 @@ module SolucionAlejo where
 
     --Ejercicio 13
     descifrarVigenere :: String -> String -> String
-    desscifrarVigenere [] _ = ""
+    desscifrarVigenere [] [] = ""
     descifrarVigenere (s:ss) (c:cs) = (desplazar s (-(letraANatural c))) : (descifrarVigenere ss (tail (expandirClave (c:cs) (length (s:ss))))) 
 
 
