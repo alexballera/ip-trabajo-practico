@@ -72,8 +72,8 @@ cantidadMinusculas (c:ls) |esMinuscula c = 1 + cantidadMinusculas ls
                           |otherwise = cantidadMinusculas ls
 
 calcularPorcentaje :: Char -> String -> Float                  --porcentaje aparición un letra minuscula sobre total letras minusculas de una palabra
-calcularPorcentaje c s |cantidadMinusculas s== 0 = 0
-                       |otherwise = apareceVeces c s/fromIntegral (cantidadMinusculas s)*100
+calcularPorcentaje c s | cantidadMinusculas s == 0 = 0.0
+                       | otherwise = (apareceVeces c s)/(fromIntegral (cantidadMinusculas s))*100
 
 -- Ej 8
 
