@@ -187,7 +187,7 @@ testsEjpeorCifrado = test [
   peorCifrado "docente" ["a", "b", "c", "d"] ~?= "a",
   peorCifrado "alumno" ["alegria"] ~?= "alegria",
   peorCifrado "aBcDeFgH" ["bcd", "ab", "jklmnio"] ~?= "ab",
-  peorCifrado "a" ["adfd", "bjkj", "cjkjk", "dajkjk", "yjkjkj", "zkjkjk"] ~?= "a"
+  peorCifrado "a" ["adfd", "bjkj", "cjkjk", "dajkjk", "yjkjkj", "zkjkjk"] ~?= "adfd"
  ]
 
 -- EJ 15
