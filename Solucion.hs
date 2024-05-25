@@ -61,36 +61,39 @@ frecuenciaAux :: String -> Char -> [Float]          --recorre abecedario y por c
 frecuenciaAux s 'z' = [calcularPorcentaje 'z' s]
 frecuenciaAux s c = calcularPorcentaje c s : frecuenciaAux s (desplazar c 1)
 
+
+calcularPorcentaje :: Char -> String -> Float                  --porcentaje aparición un letra minuscula sobre total letras minusculas de una palabra
+calcularPorcentaje c s | cantidadMinusculas s == 0 = 0.0
+                       | otherwise = (apareceVeces c s)/(fromIntegral (cantidadMinusculas s))*100
+
+
 apareceVeces :: Char -> String -> Float         --cantidad veces una letra aparece en una palabra      
 apareceVeces _ [] = 0
 apareceVeces c (x:xs) | c == x = apareceVeces c xs + 1
                       |otherwise = apareceVeces c xs
+
 
 cantidadMinusculas :: String -> Int
 cantidadMinusculas [] = 0
 cantidadMinusculas (c:ls) |esMinuscula c = 1 + cantidadMinusculas ls
                           |otherwise = cantidadMinusculas ls
 
-calcularPorcentaje :: Char -> String -> Float                  --porcentaje aparición un letra minuscula sobre total letras minusculas de una palabra
-calcularPorcentaje c s | cantidadMinusculas s == 0 = 0.0
-                       | otherwise = (apareceVeces c s)/(fromIntegral (cantidadMinusculas s))*100
-
 -- Ej 8
 
 cifradoMasFrecuente :: String -> Int -> (Char, Float)
-cifradoMasFrecuente s n = (mayorC (cifrar s n), mayorN (frecuencia (cifrar s n)))  -- par :letra de mayor frecuencia y su frecuencia (en una palabra)
+cifradoMasFrecuente s n = (mayorC (cifrar s n), mayorN (frecuencia (cifrar s n)))  -- par: letra de mayor frecuencia y su frecuencia (en una palabra)
 
                          --funciones auxiliares--
 
-mayorN :: [Float] -> Float   --frecuencia letra de mayor frecuencia aparición en una palabra
+mayorN :: [Float] -> Float   --frecuencia de la letra con mayor frecuencia de aparición en una palabra
 mayorN [x] = x
 mayorN (x:xs) | x >= head xs = mayorN (x:tail xs)
               | otherwise = mayorN xs
 
-mayorC :: String -> Char     --letra de mayor frecuencia aparición en una palabra
+mayorC :: String -> Char     --letra de mayor frecuencia de aparición en una palabra
 mayorC [x] = x
 mayorC (x:xs) | mayorN (frecuencia (x:xs)) == calcularPorcentaje x (x:xs) = x
-              |otherwise = mayorC xs
+              | otherwise = mayorC xs
 
 -- EJ 9
 esDescifrado :: String -> String -> Bool
