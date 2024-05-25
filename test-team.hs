@@ -1,5 +1,5 @@
 import Test.HUnit
-import SolucionAlejo
+import Solucion
 import Data.List
 -- No está permitido agregar nuevos imports.
 
